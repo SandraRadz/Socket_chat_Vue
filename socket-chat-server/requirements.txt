@@ -1,5 +1,7 @@
-eventlet==0.31.0
-Flask==2.0.1
-Flask-SocketIO==5.1.0
+Werkzeug==1.0.1
+Flask==1.1.2
+Flask-Sockets==0.2.1
+gevent==21.1.2
+gevent-websocket==0.10.1
 greenlet==1.1.0
 python-decouple==3.4

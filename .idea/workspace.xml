@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand />
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="61415ca5-c113-4f2a-ad61-ee1395aed580" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="a5cbc81b-9180-4cc2-a718-3e3a55647201" />
+  <component name="ProjectId" id="1uyYw6r65w5Yxyv1oX872RJf1dN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nops/ecs-refarch-cloudformation/services/ken/src" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/socket-chat-server" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="61415ca5-c113-4f2a-ad61-ee1395aed580" name="Default Changelist" comment="" />
+      <created>1625639533220</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1625639533220</updated>
+      <workItem from="1625639534341" duration="1907000" />
+      <workItem from="1625641719211" duration="61000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="656" y="359" width="598" height="402" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1625640060858">
+      <screen x="0" y="34" width="1920" height="1046" />
+    </state>
+    <state x="656" y="359" width="598" height="402" key="#com.intellij.fileTypes.FileTypeChooser/0.34.1920.1046@0.34.1920.1046" timestamp="1625640060858" />
+    <state x="743" y="315" width="424" height="490" key="FileChooserDialogImpl" timestamp="1625641777892">
+      <screen x="0" y="34" width="1920" height="1046" />
+    </state>
+    <state x="743" y="315" width="424" height="490" key="FileChooserDialogImpl/0.34.1920.1046@0.34.1920.1046" timestamp="1625641777892" />
+  </component>
+</project>

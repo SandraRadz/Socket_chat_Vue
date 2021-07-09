@@ -1,31 +1,29 @@
-from flask import Flask
-from flask_socketio import SocketIO, emit
-
+from flask import Flask, request
+from flask_sockets import Sockets
 
 from config import DevelopmentConfig
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig())
 
-socketio = SocketIO(app, cors_allowed_origins='*', logger=True, engineio_logger=True)
+sockets = Sockets(app)
 
 
-@socketio.on('connect')
-def connect():
-    print("Connected")
-    emit('MESSAGE1', ["Message from server"])
+@sockets.route('/echo')
+def echo_socket(ws):
+    # while not socket.closed:
+    while True:
+        message = ws.receive()
+        ws.send(message)
 
 
-@socketio.on('disconnect')
-def disconnect():
-    print('Client disconnected')
+@app.route('/')
+def hello():
+    return 'Hello World!'
 
 
-@socketio.on('send_message')
-def client_send_message(data):
-    print("client sent message")
-    print(data)
-
-
-if __name__ == '__main__':
-    socketio.run(app)
+if __name__ == "__main__":
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    server.serve_forever()

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-const io = require('socket.io-client')
 // import Home from './components/Home.vue'
 
 export default {
@@ -31,11 +30,18 @@ export default {
   // components: {
   //   Home
   // },
+
+  data: function() {
+    return {
+      message: '',
+      messages: [],
+      connection: null
+    }
+  },
   methods: {
-    sendMessage(e){
+    sendMessage(e) {
       e.preventDefault();
-      console.log("click");
-      this.socket.emit('send_message', {
+      this.connection.send({
         user: 'Sasha',
         msg: this.message
       });
@@ -44,20 +50,25 @@ export default {
       console.log("send message");
     }
   },
-  data () {
-    return {
-      message: '',
-      messages: [],
-      socket: io('ws://localhost:5000/ ', {transports: ['websocket']})
-    }
-  },
+  created: function() {
+    console.log("Starting connection to WebSocket Server")
+    this.connection = new WebSocket("ws://localhost:5000/echo")
 
-  mounted () {
-    this.socket.on('MESSAGE1', (socket) => {
-      console.log("get message")
-      this.messages = socket
-      console.log(this.messages)
-    })
+    this.connection.onmessage = function(event) {
+      console.log("Successfully got message!")
+      console.log(event);
+    }
+
+    this.connection.onopen = function(event) {
+      console.log(event)
+      console.log("Successfully connected to the echo websocket server...")
+    }
+
+    this.connection.onclose = function(event) {
+      console.log(event)
+      console.log("closed")
+    }
+
   }
 }
 </script>
