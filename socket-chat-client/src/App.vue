@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="column left-column">
+      <UserNameModel/>
       <div class="left-column-container">
           <div id="user-list-column" class="column">
             <UserPanel tab_name="My Chats" :users="users"/>
@@ -25,7 +26,7 @@
     </div>
     <div class="column right-column">
       <div>
-        dfgdfgdf df gs dgsdf gdf sgfd g
+        111
       </div>
     </div>
   </div>
@@ -33,11 +34,13 @@
 
 <script>
 import UserPanel from './components/UserPanel'
-import MessagePanel from "@/components/MessagePanel";
+import MessagePanel from "./components/MessagePanel";
+import UserNameModel from "./components/UserNameModal";
 
 export default {
   name: 'App',
   components: {
+    UserNameModel,
     MessagePanel,
     UserPanel
   },
@@ -48,33 +51,37 @@ export default {
       messages: [{name: "me", text: "Hello"}, {name: "Kelly", text: "How are you"}, {name: "me", text: "Fine"}],
       current_chat_name: 'Kelly',
       users: [{name: "Sasha", icon_color: "aqua"}, {name: "Kelly", icon_color: "darkcyan"}, {name: "Ann", icon_color: "cornflowerblue"}],
-      connection: null
     }
   },
   methods: {
     sendMessage(e) {
       e.preventDefault();
-      this.connection.send(this.message);
+      this.$store.state.connection.send(this.message);
 
       this.message = '';
       console.log("send message");
-    }
+    },
+
   },
   created: function() {
-    console.log("Starting connection to WebSocket Server")
-    this.connection = new WebSocket("ws://localhost:5000/echo")
-
-    this.connection.onmessage = function(event) {
+    let app_this = this
+    this.$store.state.connection.onmessage = function(event) {
+      let parsed_data = JSON.parse(event.data)
+      let message_type = parsed_data["message_type"]
+      if (message_type === 'user_id'){
+        app_this.$store.commit('set_my_hash', parsed_data['user_id'])
+      }
       console.log("Successfully got message!")
       console.log(event);
+
     }
 
-    this.connection.onopen = function(event) {
-      console.log(event)
+    this.$store.state.connection.onopen = function(event) {
       console.log("Successfully connected to the echo websocket server...")
+      console.log(event)
     }
 
-    this.connection.onclose = function(event) {
+    this.$store.state.connection.onclose = function(event) {
       console.log(event)
       console.log("closed")
     }
@@ -149,6 +156,5 @@ body{
 .submit-button {
   background: darkcyan!important;
 }
-
 
 </style>
