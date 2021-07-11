@@ -1,50 +1,55 @@
 <template>
   <div id="app">
-    <b-container class="bv-example-row">
-      <b-row>
-        <b-col>HOME!</b-col>
-        <b-col>
-          <div class="message-list-block">
-            sdf
+    <div class="column left-column">
+      <div class="left-column-container">
+          <div id="user-list-column" class="column">
+            <UserPanel :users="users"/>
           </div>
-          <div class="create-message-block">
-            <b-input-group>
-              <b-form-input v-model="message"></b-form-input>
-              <b-input-group-append>
-                <b-button variant="success" @click="sendMessage">Send</b-button>
-              </b-input-group-append>
-            </b-input-group>
+          <div id="message-column" class="column">
+            <div class="message-list-block">
+              <MessagePanel :messages="messages" :current_chat_name="current_chat_name"/>
+            </div>
+            <div class="create-message-block">
+              <b-input-group>
+                <b-form-input v-model="message"></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="success" @click="sendMessage">Send</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </div>
           </div>
-        </b-col>
-        <b-col>3 of 3</b-col>
-      </b-row>
-    </b-container>
+      </div>
+    </div>
+    <div class="column right-column">
+dfgdfgdf df gs dgsdf gdf sgfd g
+    </div>
   </div>
 </template>
 
 <script>
-// import Home from './components/Home.vue'
+import UserPanel from './components/UserPanel'
+import MessagePanel from "@/components/MessagePanel";
 
 export default {
   name: 'App',
-  // components: {
-  //   Home
-  // },
+  components: {
+    MessagePanel,
+    UserPanel
+  },
 
   data: function() {
     return {
       message: '',
-      messages: [],
+      messages: [{name: "Sasha", text: "Hello"}, {name: "Kelly", text: "How are you"}, {name: "Sasha", text: "Fine"}],
+      current_chat_name: 'Kelly',
+      users: [{name: "Sasha", icon_color: "aqua"}, {name: "Kelly", icon_color: "darkcyan"}, {name: "Ann", icon_color: "cornflowerblue"}],
       connection: null
     }
   },
   methods: {
     sendMessage(e) {
       e.preventDefault();
-      this.connection.send({
-        user: 'Sasha',
-        msg: this.message
-      });
+      this.connection.send(this.message);
 
       this.message = '';
       console.log("send message");
@@ -80,6 +85,31 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+.column{
+  display: inline-block;
+}
+
+.left-column{
+  width: 40%;
+}
+
+.right-column{
+  width: 60%;
+}
+
+#user-list-column{
+  width: 250px;
+  float: left;
+}
+
+#message-column{
+  float: left;
+  flex-grow: 1;
+}
+
+.left-column-container{
+  display: flex;
+}
+
 </style>

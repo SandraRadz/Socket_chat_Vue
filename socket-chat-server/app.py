@@ -13,8 +13,11 @@ sockets = Sockets(app)
 def echo_socket(ws):
     # while not socket.closed:
     while True:
+        print(ws)
         message = ws.receive()
-        ws.send(message)
+        print(message)
+        print(type(message))
+        ws.send("Got this!")
 
 
 @app.route('/')
