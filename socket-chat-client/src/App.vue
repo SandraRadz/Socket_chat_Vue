@@ -3,25 +3,30 @@
     <div class="column left-column">
       <div class="left-column-container">
           <div id="user-list-column" class="column">
-            <UserPanel :users="users"/>
+            <UserPanel tab_name="My Chats" :users="users"/>
+            <UserPanel tab_name="Online Users" :users="users"/>
           </div>
           <div id="message-column" class="column">
-            <div class="message-list-block">
-              <MessagePanel :messages="messages" :current_chat_name="current_chat_name"/>
-            </div>
-            <div class="create-message-block">
-              <b-input-group>
-                <b-form-input v-model="message"></b-form-input>
-                <b-input-group-append>
-                  <b-button variant="success" @click="sendMessage">Send</b-button>
-                </b-input-group-append>
-              </b-input-group>
+            <div class="flex-column">
+              <div class="message-list-block">
+                <MessagePanel :messages="messages" :current_chat_name="current_chat_name"/>
+              </div>
+              <div class="create-message-block">
+                <b-input-group>
+                  <b-form-input v-model="message" @keydown.enter="sendMessage"></b-form-input>
+                  <b-input-group-append>
+                    <b-button variant="success" class="submit-button" @click="sendMessage">Send</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </div>
             </div>
           </div>
       </div>
     </div>
     <div class="column right-column">
-dfgdfgdf df gs dgsdf gdf sgfd g
+      <div>
+        dfgdfgdf df gs dgsdf gdf sgfd g
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +45,7 @@ export default {
   data: function() {
     return {
       message: '',
-      messages: [{name: "Sasha", text: "Hello"}, {name: "Kelly", text: "How are you"}, {name: "Sasha", text: "Fine"}],
+      messages: [{name: "me", text: "Hello"}, {name: "Kelly", text: "How are you"}, {name: "me", text: "Fine"}],
       current_chat_name: 'Kelly',
       users: [{name: "Sasha", icon_color: "aqua"}, {name: "Kelly", icon_color: "darkcyan"}, {name: "Ann", icon_color: "cornflowerblue"}],
       connection: null
@@ -79,6 +84,14 @@ export default {
 </script>
 
 <style>
+body, html, #app, .column, .left-column-container{
+  height: 100%;
+}
+
+body{
+  overflow: hidden;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -91,11 +104,15 @@ export default {
 }
 
 .left-column{
-  width: 40%;
+  width: 60%;
+}
+
+#user-list-column, #message-column{
+  border-right: #5b7899 solid 1px;
 }
 
 .right-column{
-  width: 60%;
+  width: 40%;
 }
 
 #user-list-column{
@@ -106,10 +123,32 @@ export default {
 #message-column{
   float: left;
   flex-grow: 1;
+  min-width: 300px;
 }
 
 .left-column-container{
   display: flex;
 }
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.message-list-block{
+  flex: 1;
+}
+
+.create-message-block{
+  height: 40px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  padding: 7px;
+}
+.submit-button {
+  background: darkcyan!important;
+}
+
 
 </style>
