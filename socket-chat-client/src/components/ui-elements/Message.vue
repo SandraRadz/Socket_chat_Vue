@@ -1,6 +1,6 @@
 <template>
-  <div class="message-container" v-bind:class="[message['name'] === 'me' ? myMessageContainer : otherUserMessageContainer]">
-    <div class="message-block" v-bind:class="[message['name'] === 'me' ? myMessage : otherUserMessage]">
+  <div class="message-container" v-bind:class="[message['sender_id'] === my_hash ? myMessageContainer : otherUserMessageContainer]">
+    <div class="message-block" v-bind:class="[message['sender_id'] === my_hash ? myMessage : otherUserMessage]">
 <!--    <div v-bind:style="{background: user['icon_color']}" class="user-logo"></div>-->
     <div class="user-name">{{ message['name'] }}</div>
     <div class="message">{{ message['text'] }}</div>
@@ -16,7 +16,8 @@ export default {
       myMessageContainer: 'my-message-container',
       otherUserMessageContainer: 'other-user-message-container',
       myMessage: 'my-message',
-      otherUserMessage: 'other-user-message'
+      otherUserMessage: 'other-user-message',
+      my_hash: this.$store.state.my_hash
     }
   },
   props: {

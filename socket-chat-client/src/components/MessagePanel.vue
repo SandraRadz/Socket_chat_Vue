@@ -1,7 +1,7 @@
 <template>
   <div class="messages-list-container">
     <div class="title-block-header">
-      <div class="title">Chat with {{current_chat_name}}</div>
+      <div class="title">Chat with {{this.$store.state.current_chat_name}}</div>
     </div>
     <div class="message-list">
       <div v-for="(message, index) in messages" v-bind:key="index">
@@ -20,9 +20,6 @@ export default {
     Message
   },
   props: {
-    current_chat_name: {
-      require: true
-    },
     messages: {
       require: true
     }

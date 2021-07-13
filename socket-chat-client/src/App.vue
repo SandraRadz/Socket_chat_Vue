@@ -4,13 +4,12 @@
       <UserNameModel/>
       <div class="left-column-container">
           <div id="user-list-column" class="column">
-            <UserPanel tab_name="My Chats" :users="users"/>
-            <UserPanel tab_name="Online Users" :users="users"/>
+            <UserPanel tab_name="Online Users" :users="this.$store.state.online_user_list"/>
           </div>
           <div id="message-column" class="column">
             <div class="flex-column">
               <div class="message-list-block">
-                <MessagePanel :messages="messages" :current_chat_name="current_chat_name"/>
+                <MessagePanel :messages="this.$store.state.message_list"/>
               </div>
               <div class="create-message-block">
                 <b-input-group>
@@ -47,16 +46,19 @@ export default {
 
   data: function() {
     return {
-      message: '',
-      messages: [{name: "me", text: "Hello"}, {name: "Kelly", text: "How are you"}, {name: "me", text: "Fine"}],
-      current_chat_name: 'Kelly',
-      users: [{name: "Sasha", icon_color: "aqua"}, {name: "Kelly", icon_color: "darkcyan"}, {name: "Ann", icon_color: "cornflowerblue"}],
+      message: ''
     }
   },
   methods: {
     sendMessage(e) {
       e.preventDefault();
-      this.$store.state.connection.send(this.message);
+      let msg = {
+        message_type: "send_message",
+        from_user_id: this.$store.state.my_hash,
+        to_user_id: this.$store.state.current_chat_id,
+        message: this.message
+      }
+      this.$store.state.connection.send(JSON.stringify(msg))
 
       this.message = '';
       console.log("send message");
@@ -64,19 +66,7 @@ export default {
 
   },
   created: function() {
-    let app_this = this
-    this.$store.state.connection.onmessage = function(event) {
-      let parsed_data = JSON.parse(event.data)
-      let message_type = parsed_data["message_type"]
-      if (message_type === 'user_id'){
-        app_this.$store.commit('set_my_hash', parsed_data['user_id'])
-      }
-      console.log("Successfully got message!")
-      console.log(event);
-
-    }
-
-    this.$store.state.connection.onopen = function(event) {
+        this.$store.state.connection.onopen = function(event) {
       console.log("Successfully connected to the echo websocket server...")
       console.log(event)
     }
@@ -86,6 +76,36 @@ export default {
       console.log("closed")
     }
 
+  },
+  mounted() {
+    let app_this = this
+    this.$store.state.connection.onmessage = function(event) {
+      console.log(event.data)
+      let parsed_data = JSON.parse(event.data)
+      let message_type = parsed_data["message_type"]
+      console.log(message_type)
+      console.log('-----------------------------')
+      if (message_type === 'user_id'){
+        app_this.$store.commit('set_my_hash', parsed_data['user_id'])
+      }
+      else if (message_type === 'user_list'){
+        let user_list = parsed_data['user_list']
+        app_this.$store.commit('update_online_user_list', user_list)
+      }
+      else if (message_type === 'message_list'){
+        let message_list = parsed_data['message_list']
+        console.log(message_list)
+        app_this.$store.commit('update_message_list', message_list)
+      }
+      else if (message_type === 'new_message'){
+        console.log("@@@@@@@@@@@@@@@@@@@@@@")
+        let new_message = parsed_data['new_message']
+        console.log(new_message)
+        app_this.$store.commit('add_new_message', new_message)
+      }
+      console.log("Successfully got message!")
+      console.log(event)
+    }
   }
 }
 </script>

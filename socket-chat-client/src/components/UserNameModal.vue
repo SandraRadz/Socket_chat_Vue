@@ -4,7 +4,7 @@
       <template #modal-title>
         Input your name
       </template>
-      <b-form-input ref="inputUserName" v-model="name" autofocus></b-form-input>
+      <b-form-input ref="inputUserName" @keydown.enter="saveName" v-model="name" autofocus></b-form-input>
       <div class="error-message">{{ error_message }}</div>
       <b-button class="mt-3" block @click="saveName">Save name</b-button>
     </b-modal>
@@ -35,10 +35,10 @@ export default {
       if (trimmed_name.length > 0){
         let msg = {
           message_type: "new_user",
-          user_id: "12345",
           user_name: trimmed_name
         }
         this.$store.state.connection.send(JSON.stringify(msg))
+        this.$store.commit('set_my_name', trimmed_name)
         this.$refs['usernameModal'].hide()
       }
       else{
