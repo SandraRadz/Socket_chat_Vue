@@ -96,7 +96,20 @@ export default {
       }
       else if (message_type === 'new_message'){
         let new_message = parsed_data['new_message']
-        app_this.$store.commit('add_new_message', new_message)
+        let from_id = new_message['from_id']
+        let to_id = new_message['to_id']
+        if (from_id === app_this.$store.state.my_hash){
+          if (to_id === app_this.$store.state.current_chat_id){
+            app_this.$store.commit('add_new_message', new_message)
+          }
+        }
+        else{
+          if (from_id === app_this.$store.state.current_chat_id){
+            app_this.$store.commit('add_new_message', new_message)
+          }
+          // todo else add notification about unread message
+        }
+
       }
       console.log("Successfully got message!")
       console.log(event)

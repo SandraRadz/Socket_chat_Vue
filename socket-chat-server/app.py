@@ -26,18 +26,11 @@ chats = {}
 def echo_socket(ws):
     # while not socket.closed:
     while True:
-        print(ws)
-        print(ws.closed)
-        print('--------')
         if not ws.closed:
             message = ws.receive()
-            print(message)
-            print(type(message))
             if message:
                 message_json = json.loads(message)
-                print(message_json)
                 message_type = message_json["message_type"]
-                print(message_type)
                 if message_type == "new_user":
                     new_user_connection(ws, message_json)
                 elif message_type == "send_message":
@@ -47,11 +40,9 @@ def echo_socket(ws):
                 else:
                     ws.send("Got this!")
         else:
-            print("CLOSED!!!!!!!!!!!!!!!!!")
             conn = connections.pop(ws, None)
             if conn:
                 user_uuids.pop(conn['user_id'], None)
-            print(user_uuids)
             break
 
 
@@ -73,13 +64,11 @@ def send_new_user_list():
         "message_type": "user_list",
         "user_list": list(connections.values())
     }
-    print(msg)
     for conn in connections.keys():
         try:
             conn.send(json.dumps(msg))
         except WebSocketError:
             # todo delete websocket
-            print("((((((((((((((((((((((((((((((((")
             pass
 
 
@@ -103,8 +92,8 @@ def send_message(ws, message_json):
         "message_type": "new_message",
         "new_message": msg
     }
-    print(res)
     ws.send(json.dumps(res))
+    user_uuids[chat_to]['connection'].send(json.dumps(res))
 
 
 def open_chat(ws, message_json):
