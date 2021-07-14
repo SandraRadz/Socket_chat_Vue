@@ -4,6 +4,7 @@
       <UserNameModel/>
       <div class="left-column-container">
           <div id="user-list-column" class="column">
+            <div class="greeting" v-if="this.$store.state.my_name ">Hi, {{ this.$store.state.my_name }}</div>
             <UserPanel tab_name="Online Users" :users="this.$store.state.online_user_list"/>
           </div>
           <div id="message-column" class="column">
@@ -80,11 +81,8 @@ export default {
   mounted() {
     let app_this = this
     this.$store.state.connection.onmessage = function(event) {
-      console.log(event.data)
       let parsed_data = JSON.parse(event.data)
       let message_type = parsed_data["message_type"]
-      console.log(message_type)
-      console.log('-----------------------------')
       if (message_type === 'user_id'){
         app_this.$store.commit('set_my_hash', parsed_data['user_id'])
       }
@@ -94,13 +92,10 @@ export default {
       }
       else if (message_type === 'message_list'){
         let message_list = parsed_data['message_list']
-        console.log(message_list)
         app_this.$store.commit('update_message_list', message_list)
       }
       else if (message_type === 'new_message'){
-        console.log("@@@@@@@@@@@@@@@@@@@@@@")
         let new_message = parsed_data['new_message']
-        console.log(new_message)
         app_this.$store.commit('add_new_message', new_message)
       }
       console.log("Successfully got message!")
@@ -132,6 +127,14 @@ body{
 
 .left-column{
   width: 60%;
+}
+
+.greeting{
+  text-align: left;
+  font-size: 18px;
+  color: #2c3e50;
+  font-weight: bold;
+  padding: 20px 10px;
 }
 
 #user-list-column, #message-column{

@@ -1,8 +1,8 @@
 <template>
-  <div class="message-container" v-bind:class="[message['sender_id'] === my_hash ? myMessageContainer : otherUserMessageContainer]">
-    <div class="message-block" v-bind:class="[message['sender_id'] === my_hash ? myMessage : otherUserMessage]">
+  <div class="message-container" v-bind:class="[message['from_id'] === my_hash ? myMessageContainer : otherUserMessageContainer]">
+    <div class="message-block" v-bind:class="[message['from_id'] === my_hash ? myMessage : otherUserMessage]">
 <!--    <div v-bind:style="{background: user['icon_color']}" class="user-logo"></div>-->
-    <div class="user-name">{{ message['name'] }}</div>
+    <div class="user-name">{{ message['author_name'] }}</div>
     <div class="message">{{ message['text'] }}</div>
     </div>
   </div>

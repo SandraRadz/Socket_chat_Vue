@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .user-block-header{
-  padding: 40px 20px 20px 40px;
+  padding: 10px;
 
 }
 

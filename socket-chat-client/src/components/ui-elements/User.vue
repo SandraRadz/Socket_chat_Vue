@@ -1,7 +1,7 @@
 <template>
   <div class="user-info-container" @click="openChat(user)">
     <div v-bind:style="{background: user['icon_color']}" class="user-logo"></div>
-    <div class="user-name">{{ user['name'] }}</div>
+    <div class="user-name">{{ user['name'] }} <span v-if="user['user_id'] === this.$store.state.my_hash">(you)</span></div>
   </div>
 </template>
 
@@ -17,7 +17,6 @@ export default {
     openChat(user){
       let user_id = user['user_id']
       let user_name = user['name']
-      console.log(user_id)
       if (this.$store.state.current_chat_id !== user_id) {
         this.$store.commit('set_current_chat_id', user_id)
         this.$store.commit('set_current_chat_name', user_name)
@@ -28,7 +27,6 @@ export default {
           to_user_id: user_id
         }
         this.$store.state.connection.send(JSON.stringify(msg))
-        console.log("1111111111111111111111111")
       }
     }
   }

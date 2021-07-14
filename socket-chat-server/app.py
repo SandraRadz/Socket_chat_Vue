@@ -18,7 +18,7 @@ sockets = Sockets(app)
 connections = {}
 user_uuids = {}
 
-colors = ['aqua', 'darkcyan', 'cornflowerblue']
+colors = ['aqua', 'darkcyan', 'cornflowerblue', 'cadetblue', '#5b7899', 'lightblue']
 chats = {}
 
 
@@ -90,9 +90,10 @@ def send_message(ws, message_json):
     values = sorted([chat_from, chat_to])
     chat_hash = f"{values[0]}/{values[1]}"
     msg = {
-        "from": chat_from,
-        "to": chat_to,
-        "text": message
+        "from_id": chat_from,
+        "author_name": user_uuids[chat_from]['name'],
+        "to_id": chat_to,
+        "text": message,
     }
     if chat_hash in chats:
         chats[chat_hash].append(msg)
@@ -111,8 +112,6 @@ def open_chat(ws, message_json):
     chat_to = message_json['to_user_id']
     values = sorted([chat_from, chat_to])
     chat_hash = f"{values[0]}/{values[1]}"
-    print(chat_hash)
-    print("++++++++++++++++++++++++++++++++++++")
     msg = {
         "message_type": "message_list",
         "message_list": []
