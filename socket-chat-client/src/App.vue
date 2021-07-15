@@ -14,9 +14,9 @@
               </div>
               <div class="create-message-block">
                 <b-input-group>
-                  <b-form-input v-model="message" @keydown.enter="sendMessage"></b-form-input>
+                  <b-form-input v-model="message" @keydown.enter="sendMessage" :disabled="this.$store.state.current_chat_id === ''"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="success" class="submit-button" @click="sendMessage">Send</b-button>
+                    <b-button variant="success" class="submit-button" @click="sendMessage" :disabled="this.$store.state.current_chat_id === ''">Send</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>
@@ -53,16 +53,18 @@ export default {
   methods: {
     sendMessage(e) {
       e.preventDefault();
-      let msg = {
-        message_type: "send_message",
-        from_user_id: this.$store.state.my_hash,
-        to_user_id: this.$store.state.current_chat_id,
-        message: this.message
-      }
-      this.$store.state.connection.send(JSON.stringify(msg))
+      if (this.message.trim().length > 0) {
+        let msg = {
+          message_type: "send_message",
+          from_user_id: this.$store.state.my_hash,
+          to_user_id: this.$store.state.current_chat_id,
+          message: this.message
+        }
+        this.$store.state.connection.send(JSON.stringify(msg))
 
-      this.message = '';
-      console.log("send message");
+        this.message = '';
+        console.log("send message");
+      }
     },
 
   },

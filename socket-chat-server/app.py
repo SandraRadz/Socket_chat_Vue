@@ -58,6 +58,8 @@ def new_user_connection(ws, message_json):
 def select_icon_color():
     return colors[int(round(random.random() * len(colors), 0)) - 1]
 
+# todo ping connections to check if they are alive
+
 
 def send_new_user_list():
     msg = {
@@ -68,7 +70,6 @@ def send_new_user_list():
         try:
             conn.send(json.dumps(msg))
         except WebSocketError:
-            # todo delete websocket
             pass
 
 
@@ -92,8 +93,11 @@ def send_message(ws, message_json):
         "message_type": "new_message",
         "new_message": msg
     }
-    ws.send(json.dumps(res))
-    user_uuids[chat_to]['connection'].send(json.dumps(res))
+    if chat_from != chat_to:
+        ws.send(json.dumps(res))
+        user_uuids[chat_to]['connection'].send(json.dumps(res))
+    else:
+        ws.send(json.dumps(res))
 
 
 def open_chat(ws, message_json):
